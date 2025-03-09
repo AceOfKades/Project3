@@ -19,22 +19,6 @@ public class DataProcess {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read file", e);
         }
-
-        /* non-stream code
-        try (Scanner scanner = new Scanner(dataFile)) {
-            dataset = new ArrayList<>();
-
-            //skip table labels in txt file
-            if (scanner.hasNextLine()){
-                scanner.nextLine();
-            }
-
-            while (scanner.hasNextLine()) {
-                dataset.add(scanner.nextLine());
-            }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }*/
     }
 
     public static ArrayList<ArrayList<String>> tokenizeArray (ArrayList<String> dataset){  //converts arraylist of separated lines into an array of arrays
@@ -42,29 +26,10 @@ public class DataProcess {
         return dataset.stream()
                       .map(line -> new ArrayList<>(Arrays.asList(line.split("\t"))))
                       .collect(Collectors.toCollection(ArrayList::new));                   //Turn above arraylist into an element in ArrayList<ArrayList>
-
-        /* non-stream code
-        ArrayList<ArrayList<String>> datasetSet = new ArrayList<>();
-
-        for (String s : dataset) {
-            ArrayList<String> temp = new ArrayList<>(Arrays.asList(s.split("\t")));
-            datasetSet.add(temp);
-        }
-
-        return datasetSet;*/
     }
 
     public static String multiArrayToString (ArrayList<ArrayList<String>> dataset, int element){
         return dataset.get(element).stream()
                                    .collect(Collectors.joining(" "));   //join items back together in current element into a string
-
-        /*non-stream code
-        StringBuilder arrayToString = new StringBuilder();
-
-        for(String x : dataset.get(element)){
-            arrayToString.append(x).append(" ");
-        }
-
-        return arrayToString.toString();*/
     }
 }
